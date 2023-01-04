@@ -1,0 +1,11 @@
+# dependencies
+node_modules
+
+# env variables
+.env
+
+# build directory
+dist/
+
+# secret keys
+serviceAccountKey.json
