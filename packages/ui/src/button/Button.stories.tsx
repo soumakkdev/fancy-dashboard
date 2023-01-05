@@ -6,11 +6,13 @@ import { Button } from './Button'
 export default {
 	title: 'Components/Button',
 	component: Button,
-	argTypes: {
-		backgroundColor: { control: 'color' },
-	},
 } as ComponentMeta<typeof Button>
 
-const Template: ComponentStory<typeof Button> = (args) => <Button />
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>Click Me</Button>
 
 export const Default = Template.bind({})
+Default.args = {
+	variant: 'primary',
+	size: 'small',
+	fullWidth: false,
+}
