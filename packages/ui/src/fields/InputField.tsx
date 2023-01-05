@@ -7,10 +7,12 @@ interface InputFieldProps extends HTMLAttributes<HTMLInputElement>, VariantProps
 	label?: string
 	name?: string
 	type?: HTMLInputTypeAttribute
+	error?: string | boolean
 }
 
 export function InputField(props: InputFieldProps) {
-	const { label, name, type = 'text', ...rest } = props
+	const { label, name, type = 'text', error, ...rest } = props
+
 	return (
 		<div>
 			{label ? (
@@ -22,6 +24,8 @@ export function InputField(props: InputFieldProps) {
 			<div className="mt-1">
 				<input {...rest} type={type} name={name} id={name} className={inputStyles()} />
 			</div>
+
+			{error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null}
 		</div>
 	)
 }
