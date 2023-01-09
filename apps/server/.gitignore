@@ -9,3 +9,5 @@ dist/
 
 # secret keys
 serviceAccountKey.json
+
+*.http

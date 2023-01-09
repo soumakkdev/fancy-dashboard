@@ -3,10 +3,13 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import morgan from 'morgan'
 import helmet from 'helmet'
-
-import authRoutes from './routes/auth'
 import createHttpError from 'http-errors'
 import { Prisma } from '@prisma/client'
+
+import authRoutes from './routes/auth'
+import customerRoutes from './routes/customers'
+import productRoutes from './routes/products'
+import orderRoutes from './routes/orders'
 
 dotenv.config()
 
@@ -25,6 +28,9 @@ app.use(
 app.use(morgan('dev'))
 
 app.use('/auth', authRoutes)
+app.use('/customers', customerRoutes)
+app.use('/products', productRoutes)
+app.use('/orders', orderRoutes)
 
 app.get('/ping', (req, res) => {
 	res.send('pong')
