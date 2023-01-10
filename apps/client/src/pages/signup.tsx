@@ -1,5 +1,7 @@
 import { Form, FormikProvider, useFormik } from 'formik'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 import { Button, Checkbox, InputField } from 'ui'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 import { useAuth } from '../lib/AuthContext'
@@ -8,6 +10,7 @@ import { FormikField } from '../utils/FormikField'
 
 export default function SignupPage() {
 	const { signup } = useAuth()
+	const router = useRouter()
 	const formik = useFormik({
 		initialValues: {
 			name: '',
@@ -18,8 +21,13 @@ export default function SignupPage() {
 		onSubmit,
 	})
 
-	function onSubmit(values: ISignupSchema) {
-		signup(values)
+	async function onSubmit(values: ISignupSchema) {
+		try {
+			await signup(values)
+			router.push('/')
+		} catch (err) {
+			toast.error('Signup failed')
+		}
 	}
 
 	return (
