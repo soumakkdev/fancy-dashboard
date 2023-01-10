@@ -1,3 +1,5 @@
+import DashboardLayout from '../components/layout/DashboardLayout'
+
 export default function HomePage() {
-	return <>Welcome🤝</>
+	return <DashboardLayout title="Dashboard"></DashboardLayout>
 }

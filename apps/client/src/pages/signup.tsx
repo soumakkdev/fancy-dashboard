@@ -1,12 +1,12 @@
+import { useAuth } from '@/lib/AuthContext'
+import { FormikField } from '@/lib/FormikField'
+import { ISignupSchema, ZSignupSchema } from '@/types/auth'
 import { Form, FormikProvider, useFormik } from 'formik'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import { Button, Checkbox, InputField } from 'ui'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
-import { useAuth } from '../lib/AuthContext'
-import { ISignupSchema, ZSignupSchema } from '../types/auth'
-import { FormikField } from '../utils/FormikField'
 
 export default function SignupPage() {
 	const { signup } = useAuth()
