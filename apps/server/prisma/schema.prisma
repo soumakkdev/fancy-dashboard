@@ -12,7 +12,7 @@ model User {
   email String  @unique
   name  String?
   uid   String
-  happy Boolean
+  happy Boolean @default(false)
 }
 
 model Customer {
@@ -23,10 +23,11 @@ model Customer {
   mobileNo    String
   callingCode String
 
-  payment Payment
+  payment Payment?
   address Address
 
-  status String?
+  status String
+  notes  String?
   orders Order[]
 }
 
