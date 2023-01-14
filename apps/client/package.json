@@ -16,10 +16,11 @@
 		"@tanstack/react-query-devtools": "^4.22.0",
 		"clsx": "^1.2.1",
 		"firebase": "^9.15.0",
+		"firebase-admin": "^11.4.1",
 		"formik": "^2.2.9",
 		"jotai": "^1.13.0",
-		"js-cookie": "^3.0.1",
 		"next": "13.1.1",
+		"nookies": "^2.5.2",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-hot-toast": "^2.4.0",
@@ -28,7 +29,6 @@
 		"zod-formik-adapter": "^1.2.0"
 	},
 	"devDependencies": {
-		"@types/js-cookie": "^3.0.2",
 		"@types/node": "18.11.18",
 		"@types/react": "18.0.26",
 		"@types/react-dom": "18.0.10",

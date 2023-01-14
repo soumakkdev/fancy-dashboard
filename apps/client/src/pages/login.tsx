@@ -2,11 +2,13 @@ import { FormikField } from '@/lib/FormikField'
 import { Form, FormikProvider, useFormik } from 'formik'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { GetServerSidePropsContext } from 'next/types'
 import toast from 'react-hot-toast'
 import { Button, InputField } from 'ui'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 import { useAuth } from '../lib/AuthContext'
 import { ILoginSchema, ZLoginSchema } from '../types/auth'
+import nookies from 'nookies'
 
 export default function LoginPage() {
 	const { login } = useAuth()

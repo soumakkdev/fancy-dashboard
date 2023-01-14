@@ -8,8 +8,10 @@ const firebaseConfig = {
 	storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
 }
 
-const app = initializeApp(firebaseConfig)
+// if firebase client is called from browser and no apps is present then initialize the app
+// if (typeof window !== 'undefined' && !getApps().length) {}
 
+const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
 export { app, auth }

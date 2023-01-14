@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+import nookies from 'nookies'
 
 export async function httpRequest(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, body?: object) {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`, {
@@ -12,13 +12,14 @@ export async function httpRequest(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url
 }
 
 export async function httpRequestWithAuth(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, body?: object) {
-	const token = Cookies.get('token')
+	const cookies = nookies.get(undefined, 'token')
+
 	const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`, {
 		method,
 		body: JSON.stringify(body),
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${cookies.token}`,
 		},
 	})
 	return await res.json()

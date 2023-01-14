@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-import Cookies from 'js-cookie'
+import nookies from 'nookies'
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { ILoginSchema, ISignupSchema } from '../types/auth'
-import { auth } from './firebase'
+import { auth } from './firebase/client'
 import { httpRequest, httpRequestWithAuth } from './helpers'
 
 interface IAuthContext {
@@ -17,10 +17,13 @@ export const AuthProvider = (props: { children: ReactNode }) => {
 
 	useEffect(() => {
 		onAuthStateChanged(auth, async (user) => {
-			if (user) {
+			if (!user) {
+				setUser(null)
+				nookies.set(undefined, 'token', '', { path: '/' })
+			} else {
 				const token = await user.getIdToken()
 				if (token) {
-					Cookies.set('token', token)
+					nookies.set(undefined, 'token', token, { path: '/' })
 
 					const res = await httpRequestWithAuth('GET', '/auth/profile')
 					setUser(res.data)
