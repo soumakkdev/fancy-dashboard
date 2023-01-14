@@ -2,7 +2,10 @@ import { httpRequestWithAuth } from '@/lib/helpers'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 export function useCustomers() {
-	return useQuery(['customers'], () => httpRequestWithAuth('GET', '/customers'))
+	return useQuery(['customers'], () => httpRequestWithAuth('GET', '/customers'), {
+		select: (res) => res.data,
+		staleTime: 60000,
+	})
 }
 
 export function useSaveCustomer() {

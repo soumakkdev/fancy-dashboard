@@ -22,5 +22,10 @@ export async function httpRequestWithAuth(method: 'GET' | 'POST' | 'PUT' | 'DELE
 			Authorization: `Bearer ${cookies.token}`,
 		},
 	})
-	return await res.json()
+
+	const data = await res.json()
+	if (!res.ok) {
+		throw new Error(data?.message)
+	}
+	return data
 }

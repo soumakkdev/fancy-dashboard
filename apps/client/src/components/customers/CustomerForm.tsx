@@ -1,18 +1,43 @@
 import { FormikField } from '@/lib/FormikField'
 import { useFormik, FormikProvider } from 'formik'
+import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 import { Button, InputField } from 'ui'
 import DashboardLayout from '../layout/DashboardLayout'
 import { useSaveCustomer } from './Customers.query'
+import { ICustomer } from './ViewCustomers'
 
 export default function CustomerForm() {
+	const router = useRouter()
 	const { mutate: saveCustomer } = useSaveCustomer()
 	const formik = useFormik({
-		initialValues: {},
+		initialValues: {
+			firstName: 'Soumak',
+			lastName: 'Dutta',
+			emailId: 'soumak@gmail.com',
+			mobileNo: '8392729283',
+			callingCode: '+91',
+			address: {
+				address: 'Simurali',
+				city: 'Kolkata',
+				state: 'West Bengal',
+				country: 'India',
+				pinCode: '847382',
+			},
+			payment: {
+				number: '8392829809876746',
+				expiry: '03/53',
+				cvv: '342',
+				name: 'John Doe',
+				card: 'visa',
+			},
+			status: 'active',
+		},
 		onSubmit,
 	})
 
-	function onSubmit(values) {
+	function onSubmit(values: ICustomer) {
+		console.log(values)
 		saveCustomer(
 			{
 				body: values,
@@ -34,7 +59,9 @@ export default function CustomerForm() {
 				title="Add Customer"
 				action={
 					<>
-						<Button variant="secondary">Cancel</Button>
+						<Button variant="secondary" onClick={() => router.back()}>
+							Cancel
+						</Button>
 						<Button onClick={() => formik.handleSubmit()}>Submit</Button>
 					</>
 				}
