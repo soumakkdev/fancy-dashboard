@@ -1,7 +1,7 @@
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { FormikProvider, useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Button } from 'ui'
 import ChooseCustomer from './components/ChooseCustomer'
 import ChooseProduct from './components/ChooseProduct'
@@ -34,43 +34,49 @@ export default function OrderForm() {
 	const prevStep = () => setStep((s) => s - 1)
 	const goBack = () => router.back()
 
-	const getActionFragment = useCallback(() => {
+	const getActionConfig = useMemo(() => {
+		const config: any = {}
 		switch (step) {
 			case 0:
-				return (
-					<>
-						<Button variant="secondary" onClick={goBack}>
-							Cancel
-						</Button>
-						<Button onClick={nextStep}>Next</Button>
-					</>
-				)
+				config.cancelBtnTxt = 'Cancel'
+				config.confirmBtnTxt = 'Next'
+				config.onCancel = goBack
+				config.onConfirm = nextStep
+				break
 			case 1:
-				return (
-					<>
-						<Button variant="secondary" onClick={prevStep}>
-							Back
-						</Button>
-						<Button onClick={nextStep}>Next</Button>
-					</>
-				)
+				config.cancelBtnTxt = 'Back'
+				config.confirmBtnTxt = 'Next'
+				config.onCancel = prevStep
+				config.onConfirm = nextStep
+				break
 			case 2:
-				return (
-					<>
-						<Button variant="secondary" onClick={prevStep}>
-							Back
-						</Button>
-						<Button>Place Order</Button>
-					</>
-				)
+				config.cancelBtnTxt = 'Back'
+				config.confirmBtnTxt = 'Place Order'
+				config.onCancel = prevStep
+				config.onConfirm = () => {}
+				break
+
 			default:
-				return null
+				return
 		}
+		return config
 	}, [step])
 
 	return (
 		<FormikProvider value={formik}>
-			<DashboardLayout title="Add Order" action={getActionFragment()}>
+			<DashboardLayout
+				title="Add Order"
+				action={
+					<>
+						<Button variant="secondary" onClick={getActionConfig.onCancel}>
+							{getActionConfig.cancelBtnTxt}
+						</Button>
+						<Button variant="primary" onClick={getActionConfig.onConfirm}>
+							{getActionConfig.confirmBtnTxt}
+						</Button>
+					</>
+				}
+			>
 				{getStepFragment()}
 			</DashboardLayout>
 		</FormikProvider>
