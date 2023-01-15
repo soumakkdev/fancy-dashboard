@@ -10,8 +10,8 @@ export function useCustomers() {
 
 export function useSaveCustomer() {
 	return useMutation({
-		mutationFn: ({ body, isEdit, customerId }: any) => {
-			if (isEdit) {
+		mutationFn: ({ body, customerId }: any) => {
+			if (customerId) {
 				return httpRequestWithAuth('PUT', `/customers/${customerId}`, body)
 			} else {
 				return httpRequestWithAuth('POST', '/customers', body)

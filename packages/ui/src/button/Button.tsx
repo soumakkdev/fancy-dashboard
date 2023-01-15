@@ -4,8 +4,8 @@ import React, { HTMLAttributes } from 'react'
 const buttonStyles = cva('inline-flex items-center justify-center border border-transparent text-sm font-medium', {
 	variants: {
 		variant: {
-			primary: 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
-			secondary: 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
+			primary: 'bg-slate-600 text-white shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2',
+			secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2',
 		},
 		size: {
 			small: 'px-3 py-1 rounded-md',

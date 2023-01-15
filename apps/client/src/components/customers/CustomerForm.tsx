@@ -1,11 +1,11 @@
 import { FormikField } from '@/lib/FormikField'
+import { ICustomer } from '@/types/customer'
 import { useFormik, FormikProvider } from 'formik'
 import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 import { Button, InputField } from 'ui'
 import DashboardLayout from '../layout/DashboardLayout'
 import { useSaveCustomer } from './Customers.query'
-import { ICustomer } from './ViewCustomers'
 
 export default function CustomerForm() {
 	const router = useRouter()

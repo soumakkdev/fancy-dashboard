@@ -1,34 +1,10 @@
+import { ICustomer } from '@/types/customer'
 import { createColumnHelper } from '@tanstack/react-table'
 import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
-import { Button } from 'ui'
+import { Button, Table } from 'ui'
 import DashboardLayout from '../layout/DashboardLayout'
 import { useCustomers } from './Customers.query'
-import Table from './Table'
-
-export interface ICustomer {
-	id?: string
-	firstName: string
-	lastName: string
-	emailId: string
-	mobileNo: string
-	callingCode: string
-	payment: {
-		number: string
-		expiry: string
-		cvv: string
-		name: string
-		card: string
-	}
-	address: {
-		address: string
-		city: string
-		state: string
-		country: string
-		pinCode: string
-	}
-	status: string
-}
 
 export default function ViewCustomers() {
 	const router = useRouter()

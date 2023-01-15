@@ -1,13 +1,12 @@
-import { createColumnHelper, flexRender, useReactTable } from '@tanstack/react-table'
+import { flexRender, useReactTable } from '@tanstack/react-table'
 import { getCoreRowModel } from '@tanstack/table-core'
-import React from 'react'
 
 interface ITable {
 	data: any[]
 	columns: any[]
 }
 
-export default function Table(props: ITable) {
+export function Table(props: ITable) {
 	const { columns, data } = props
 	const table = useReactTable({
 		data,
