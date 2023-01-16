@@ -52,7 +52,7 @@ model Product {
   name        String
   description String?
   sku         String
-  price       String
+  price       Float
   image       String
   status      String?
 
@@ -79,7 +79,7 @@ model Order {
 
   items OrderItem[]
 
-  subtotal Int
+  subtotal Float
   discount Int
-  total    Int
+  total    Float
 }

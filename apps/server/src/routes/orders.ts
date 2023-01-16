@@ -19,6 +19,7 @@ routes.get('/', verifyAuth, async (req, res, next) => {
 		})
 		res.status(200).json({ data: orders, status: 'success' })
 	} catch (err) {
+		console.log(err)
 		if (err instanceof Error) {
 			next(createHttpError(500, err?.message ?? 'Unexpected error occurred while fetching orders'))
 		}

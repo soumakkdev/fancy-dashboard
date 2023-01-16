@@ -1,5 +1,4 @@
 export interface ICustomer {
-	id?: string
 	firstName: string
 	lastName: string
 	emailId: string
@@ -20,4 +19,8 @@ export interface ICustomer {
 		pinCode: string
 	}
 	status: string
+}
+
+export interface ICustomerWithId extends ICustomer {
+	id: string
 }

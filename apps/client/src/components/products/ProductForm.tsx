@@ -17,10 +17,10 @@ export default function ProductForm(props: IProductForm) {
 
 	const formik = useFormik({
 		initialValues: {
-			name: 'Adidas black',
-			description: 'What?',
+			name: 'Adidas',
+			description: 'Shoes',
 			sku: 'HYHRT345',
-			price: '8900',
+			price: 8900,
 			image: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/705c072d-0c30-49b3-81ce-42e95b118e31/pegasus-39-road-running-shoes-kmZSD6.png',
 			status: 'active',
 		},
@@ -28,8 +28,12 @@ export default function ProductForm(props: IProductForm) {
 	})
 
 	function onSubmit(values: IProduct) {
+		const body = {
+			...values,
+			price: Number(values.price),
+		}
 		saveProduct(
-			{ body: values },
+			{ body },
 			{
 				onSuccess: () => {
 					toast.success('Product created successfully')

@@ -1,14 +1,16 @@
 export interface IProduct {
-	id: string
 	name: string
 	description: string
 	sku: string
-	price: string
+	price: number
 	image: string
 	status: string
 }
 
-export interface IOrderItem {
-	productId: string
+export interface IProductWithId extends IProduct {
+	id: string
+}
+
+export interface IOrderItem extends IProductWithId {
 	quantity: number
 }

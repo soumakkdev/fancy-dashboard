@@ -1,21 +1,53 @@
 import DashboardLayout from '@/components/layout/DashboardLayout'
+import { IOrderFormValues, IOrderReqBody } from '@/types/order'
 import { FormikProvider, useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { Button } from 'ui'
 import ChooseCustomer from './components/ChooseCustomer'
 import ChooseProduct from './components/ChooseProduct'
 import OrderSummary from './components/OrderSummary'
+import { usePlaceOrder } from './Orders.query'
+import { getOrderPriceInfo } from './Orders.utils'
 
 export default function OrderForm() {
 	const router = useRouter()
 	const [step, setStep] = useState(0)
+	const { mutate: placeOrder } = usePlaceOrder()
 	const formik = useFormik({
-		initialValues: {},
+		initialValues: {
+			products: [],
+			customer: null,
+		},
 		onSubmit,
 	})
 
-	function onSubmit() {}
+	function onSubmit(values: IOrderFormValues) {
+		const priceInfo = getOrderPriceInfo(values.products)
+		const body: IOrderReqBody = {
+			...priceInfo,
+			customerId: values.customer?.id as string,
+			products: values?.products?.map((product) => ({
+				productId: product.id,
+				quantity: product.quantity,
+			})),
+		}
+
+		placeOrder(
+			{
+				body,
+			},
+			{
+				onSuccess: () => {
+					toast.success('Order placed successfully')
+				},
+				onError: () => {
+					toast.error('Failed to create order')
+				},
+			}
+		)
+	}
 
 	const getStepFragment = useCallback(() => {
 		switch (step) {
@@ -32,7 +64,7 @@ export default function OrderForm() {
 
 	const nextStep = () => setStep((s) => s + 1)
 	const prevStep = () => setStep((s) => s - 1)
-	const goBack = () => router.back()
+	const goBack = useCallback(() => router.back(), [router])
 
 	const getActionConfig = useMemo(() => {
 		const config: any = {}
@@ -53,14 +85,14 @@ export default function OrderForm() {
 				config.cancelBtnTxt = 'Back'
 				config.confirmBtnTxt = 'Place Order'
 				config.onCancel = prevStep
-				config.onConfirm = () => {}
+				config.onConfirm = formik.handleSubmit
 				break
 
 			default:
 				return
 		}
 		return config
-	}, [step])
+	}, [step, formik.handleSubmit, goBack])
 
 	return (
 		<FormikProvider value={formik}>

@@ -1,7 +1,15 @@
-import { ICustomer } from '@/types/customer'
 import { IOrderItem } from '@/types/product'
-import { atom } from 'jotai'
 
-export const selectedCustomerAtom = atom<ICustomer | null>(null)
+export const getOrderPriceInfo = (selectedProducts: IOrderItem[]) => {
+	const subtotal = selectedProducts?.reduce((subtotal, product) => {
+		return (subtotal += Number(product?.price) * product?.quantity)
+	}, 0)
+	const discount = 5
+	const total = subtotal - (subtotal / 100) * discount
 
-export const selectedProductsAtom = atom<IOrderItem[]>([])
+	return {
+		subtotal,
+		discount,
+		total,
+	}
+}
