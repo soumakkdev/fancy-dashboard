@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetServerSidePropsContext } from 'next/types'
 import toast from 'react-hot-toast'
-import { Button, InputField } from 'ui'
+import { Button, Checkbox, InputField } from 'ui'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 import { useAuth } from '../lib/AuthContext'
 import { ILoginSchema, ZLoginSchema } from '../types/auth'
@@ -38,38 +38,24 @@ export default function LoginPage() {
 			</div>
 
 			<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-				<div className="bg-white py-8 px-4 shadow-sm sm:rounded-xl sm:px-10">
+				<div className="bg-white p-8 sm:px-10">
 					<FormikProvider value={formik}>
 						<Form className="space-y-6">
 							<FormikField name="email">
-								<InputField label="Email" />
+								<InputField label="Email" size="large" />
 							</FormikField>
 
 							<FormikField name="password">
-								<InputField label="Password" />
+								<InputField label="Password" type="password" size="large" />
 							</FormikField>
 
 							<div className="flex items-center justify-between">
 								<div className="flex items-center">
-									<input
-										id="remember-me"
-										name="remember-me"
-										type="checkbox"
-										className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-									/>
-									<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-										Remember me
-									</label>
-								</div>
-
-								<div className="text-sm">
-									<a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-										Forgot your password?
-									</a>
+									<Checkbox label="Agree all terms" name="agree" />
 								</div>
 							</div>
 
-							<Button type="submit" fullWidth>
+							<Button type="submit" size="large" fullWidth>
 								Sign in
 							</Button>
 

@@ -3,6 +3,7 @@ import { CalendarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XMarkIcon } f
 import clsx from 'clsx'
 import { useAtom } from 'jotai'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { isSidebarOpenAtom } from './Layout.atoms'
 
@@ -16,6 +17,8 @@ const navigation = [
 
 export default function Sidebar() {
 	const [sidebarOpen, setSidebarOpen] = useAtom(isSidebarOpenAtom)
+	const router = useRouter()
+	console.log(router)
 
 	return (
 		<div>
@@ -65,9 +68,6 @@ export default function Sidebar() {
 									</div>
 								</Transition.Child>
 								<div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
-									<div className="flex flex-shrink-0 items-center px-4">
-										<img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-									</div>
 									<nav className="mt-5 space-y-1 px-2">
 										{navigation.map((item) => (
 											<Link
@@ -100,31 +100,35 @@ export default function Sidebar() {
 			{/* Static sidebar for desktop */}
 			<div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
 				{/* Sidebar component, swap this element with another sidebar if you like */}
-				<div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
+				<div className="flex min-h-0 flex-1 flex-col border-r border-dashed border-gray-200">
 					<div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
 						<div className="flex flex-shrink-0 items-center px-4">
-							<img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+							<h1 className="font-bold text-2xl font-serif">Fancy Dashboard</h1>
 						</div>
-						<nav className="mt-5 flex-1 space-y-1 bg-white px-2">
-							{navigation.map((item) => (
-								<Link
-									key={item.name}
-									href={item.href}
-									className={clsx(
-										item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-										'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-									)}
-								>
-									<item.icon
+
+						<nav className="mt-5 flex-1 space-y-1 px-2">
+							{navigation.map((item) => {
+								const isActive = router.pathname.endsWith(item.href)
+								return (
+									<Link
+										key={item.name}
+										href={item.href}
 										className={clsx(
-											item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-											'mr-3 flex-shrink-0 h-6 w-6'
+											isActive ? 'bg-zinc-200 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+											'group flex items-center px-2 py-2 text-sm font-medium'
 										)}
-										aria-hidden="true"
-									/>
-									{item.name}
-								</Link>
-							))}
+									>
+										<item.icon
+											className={clsx(
+												isActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+												'mr-3 flex-shrink-0 h-6 w-6'
+											)}
+											aria-hidden="true"
+										/>
+										{item.name}
+									</Link>
+								)
+							})}
 						</nav>
 					</div>
 				</div>
